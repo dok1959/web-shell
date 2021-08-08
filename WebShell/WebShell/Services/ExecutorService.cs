@@ -1,5 +1,4 @@
-﻿using System;
-using WebShell.Models;
+﻿using WebShell.Models;
 
 namespace WebShell.Services
 {
@@ -7,7 +6,7 @@ namespace WebShell.Services
     {
         public string Execute(Command command)
         {
-            throw new NotImplementedException();
+            return "";
         }
     }
 }

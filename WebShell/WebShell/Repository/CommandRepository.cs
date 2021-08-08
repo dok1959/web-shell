@@ -6,7 +6,7 @@ using WebShell.Models;
 
 namespace WebShell.Repository
 {
-    public class CommandRepository
+    public class CommandRepository : ICommandRepository
     {
         private ApplicationContext _context;
         private DbSet<Command> _dbSet;
@@ -17,35 +17,17 @@ namespace WebShell.Repository
             _dbSet = context.Set<Command>();
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
-        public void Create(Command command)
+        public IEnumerable<Command> GetAll() => _dbSet.AsNoTracking();
+        public Command Get(long id) => _dbSet.AsNoTracking().FirstOrDefault(command => command.Id.Equals(id));
+        public void Add(Command command)
         {
             _dbSet.Add(command);
+            _context.SaveChanges();
         }
-
-        public IEnumerable<Command> GetAll()
-        {
-            return _dbSet.AsNoTracking();
-        }
-
-        public Command Get(long id)
-        {
-            return _dbSet.AsNoTracking().FirstOrDefault(command => command.Id.Equals(id));
-        }
-
-        public void Update(Command item)
-        {
-            _dbSet.Update(item);
-        }
-
-        public Command Remove(Command item)
+        public void Remove(Command item)
         {
             _dbSet.Remove(item);
-            return item;
+            _context.SaveChanges();
         }
     }
 }
