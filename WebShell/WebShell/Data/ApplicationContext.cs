@@ -5,7 +5,7 @@ namespace WebShell.Data
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Command> Registrations { get; set; }
+        public DbSet<Command> Commands { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();
