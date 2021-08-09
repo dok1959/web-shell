@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebShell.Data;
 using WebShell.Repository;
+using WebShell.Services.ExecutorServices;
+using WebShell.Services.ProcessorServices;
 
 namespace WebShell
 {
@@ -27,7 +31,12 @@ namespace WebShell
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddTransient<ICommandRepository, InMemoryCommandRepository>();
+            string connection = Configuration.GetConnectionString("Connection");
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+
+            services.AddSingleton<ICommandRepository, InMemoryCommandRepository>();
+            services.AddScoped<IExecutorService, CmdExecutorService>();
+            services.AddScoped<IProcessorService, CmdInputProcessorService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
