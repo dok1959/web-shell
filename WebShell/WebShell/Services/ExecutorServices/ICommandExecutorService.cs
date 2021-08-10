@@ -2,7 +2,7 @@
 
 namespace WebShell.Services.ExecutorServices
 {
-    public interface IExecutorService
+    public interface ICommandExecutorService
     {
         string Execute(string command);
     }

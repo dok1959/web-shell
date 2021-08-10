@@ -3,11 +3,11 @@ using System.Text;
 
 namespace WebShell.Services.ExecutorServices
 {
-    public class CmdExecutorService : IExecutorService
+    public class CmdCommandExecutorService : ICommandExecutorService
     {
         private StringBuilder _stringBuilder;
 
-        public CmdExecutorService()
+        public CmdCommandExecutorService()
         {
             _stringBuilder = new StringBuilder();
         }
