@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebShell.Services.ParserServices
 {
-    public class CmdCommandsParserService : ICommandsParserService
+    public class CmdInstructionParserService : IParserService
     {
         public IEnumerable<string> Parse(string input)
         {

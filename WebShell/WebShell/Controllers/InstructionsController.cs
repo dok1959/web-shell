@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebShell.Models;
 using WebShell.Repository;
@@ -13,12 +14,12 @@ namespace WebShell.Controllers
     public class InstructionsController : ControllerBase
     {
         private IRepository<Instruction> _repository;
-        private ICommandExecutorService _commandExecutor;
-        private ICommandsParserService _commandsParser;
+        private IExecutorService _commandExecutor;
+        private IParserService _commandsParser;
         public InstructionsController(
             IRepository<Instruction> repository, 
-            ICommandExecutorService commandExecutor, 
-            ICommandsParserService commandsParser)
+            IExecutorService commandExecutor, 
+            IParserService commandsParser)
         {
             _repository = repository;
             _commandExecutor = commandExecutor;
@@ -31,7 +32,7 @@ namespace WebShell.Controllers
             IEnumerable<Instruction> instructions = _repository.GetAll();
             if (instructions == null)
                 return NotFound();
-            return Ok(instructions);
+            return Ok(instructions.Select(i => i.Content));
         }
 
         [HttpGet("{id}")]
@@ -40,7 +41,7 @@ namespace WebShell.Controllers
             Instruction instruction = _repository.Get(id);
             if (instruction == null)
                 return NotFound();
-            return Ok(instruction);
+            return Ok(instruction.Content);
         }
 
         [HttpPost]
@@ -61,7 +62,7 @@ namespace WebShell.Controllers
             }
             string result = stringBuilder.ToString().TrimEnd();
 
-            return Ok(result);
+            return Ok(new { message = result});
         }
     }
 }

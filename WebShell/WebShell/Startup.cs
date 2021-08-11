@@ -36,8 +36,8 @@ namespace WebShell
             services.AddSingleton(context);
 
             services.AddSingleton<IRepository<Instruction>, InstructionRepository>();
-            services.AddScoped<ICommandExecutorService, CmdCommandExecutorService>();
-            services.AddScoped<ICommandsParserService, CmdCommandsParserService>();
+            services.AddScoped<IExecutorService, CmdInstructionExecutorService>();
+            services.AddScoped<IParserService, CmdInstructionParserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,7 +2,7 @@
 
 namespace WebShell.Services.ParserServices
 {
-    public interface ICommandsParserService
+    public interface IParserService
     {
         IEnumerable<string> Parse(string input);
     }
