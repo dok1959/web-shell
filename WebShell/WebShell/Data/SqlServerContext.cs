@@ -7,9 +7,9 @@ namespace WebShell.Data
     {
         private SqlConnection _connection { get; set; }
 
-        public SqlServerContext(string connectionString)
+        public SqlServerContext(string connectionString, string masterConnectionString)
         {
-            CreateDatabaseIfNotExists();
+            CreateDatabaseIfNotExists(masterConnectionString);
             _connection = new SqlConnection(connectionString);
             _connection.Open();
             CreateInstructionsTable();
@@ -32,9 +32,9 @@ namespace WebShell.Data
             _connection.Close();
         }
 
-        private void CreateDatabaseIfNotExists()
+        private void CreateDatabaseIfNotExists(string masterConnectionString)
         {
-            SqlConnection sqlConnection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;");
+            SqlConnection sqlConnection = new SqlConnection(masterConnectionString);
             sqlConnection.Open();
             SqlCommand sqlCommand = new SqlCommand(
                 "IF NOT EXISTS (" +

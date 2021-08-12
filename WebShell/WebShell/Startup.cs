@@ -32,7 +32,8 @@ namespace WebShell
             });
 
             string connectionString = Configuration.GetConnectionString("WebShellDBConnection");
-            SqlServerContext context = new SqlServerContext(connectionString);
+            string masterConnectionString = Configuration.GetConnectionString("MasterDBConnection");
+            SqlServerContext context = new SqlServerContext(connectionString, masterConnectionString);
             services.AddSingleton(context);
 
             services.AddSingleton<IRepository<Instruction>, InstructionRepository>();

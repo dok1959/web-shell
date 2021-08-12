@@ -56,22 +56,28 @@ export default class App extends Component {
     this.setState({
       messagesBuffer : buffer,
       commands : commands,
-      inputCommand : ''
+      cursorPosition : commands.length - 1
     });
   }
 
   handleArrowKeyDown(event) {
-    const result = this.state.cursorPosition;
-    if (event.keyCode === 38 && (result - 1) >= 0) {
+    var result = this.state.cursorPosition;
+    if(event.keyCode === 38) {
+      if(result - 1 >= 0) {
+        result = result - 1;
+      }
       this.setState({
-        cursorPosition : result - 1,
-        inputCommand : this.state.commands[result - 1]
+        cursorPosition : result,
+        inputCommand : this.state.commands[result]
       });
-    } 
-    else if (event.keyCode === 40 && (result + 1) < this.state.commands.length) {
+    }
+    else if (event.keyCode === 40) {
+      if(result + 1 < this.state.commands.length) {
+        result = result + 1;
+      }
       this.setState({
-        cursorPosition : result + 1,
-        inputCommand : this.state.commands[result + 1]
+        cursorPosition : result,
+        inputCommand : this.state.commands[result]
       });
     }
   }
@@ -79,6 +85,9 @@ export default class App extends Component {
   handleSubmit = () => {
     if(this.state.inputCommand != '') {
       this.postCommand(this.state.inputCommand);
+      this.setState({
+        inputCommand : ''
+      });
     }
   }
 
@@ -100,11 +109,22 @@ export default class App extends Component {
   render () {
     const { messagesBuffer } = this.state;
     return (
-      <div>
-        <input type = "text" value = {this.state.inputCommand} onChange = {this.handleChange} onKeyDown = {this.handleEnterKeyPress}/>         
-        <input type = "submit" value = "Send" onClick = {this.handleSubmit}/>
-        {messagesBuffer.map((value) => {
-          return <div>{value}</div>})}
-      </div>)
+        <div>
+          <div className="input-group mb-3">
+              <input className="form-control" type = "text" value = {this.state.inputCommand} onChange = {this.handleChange} onKeyDown = {this.handleEnterKeyPress}/>         
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onClick = {this.handleSubmit}>Send</button>
+              </div>
+          </div>
+          <div className="container">
+          <ul class="list-group list-group-flush">
+            {
+              messagesBuffer.map((value) => {
+                return <li class="list-group-item">{value}</li>})
+            }
+          </ul>
+          </div>
+        </div>
+        )
   }
 }
