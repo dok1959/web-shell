@@ -1,5 +1,4 @@
 # web-shell
-Web shell
 
 Требования:
 - ASP.NET Core 3.1
