@@ -5,4 +5,6 @@
 - Node.js 14.17.5
 - Sql Server 2017
 
-![alt text](Doc/example.png "Пример работы с web shell")
+Пример работы с web shell:
+
+![alt text](Doc/example.png "Пример")
